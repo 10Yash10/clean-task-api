@@ -110,4 +110,4 @@ class TaskRepository(ITaskRepository):
 
         if model:
             self.db.delete(model)
-            self.db.commit()
+            self.db.commit();
