@@ -100,3 +100,14 @@ class TaskRepository(ITaskRepository):
             priority=model.priority,
             assigned_user_id=model.assigned_user_id
         )
+
+
+    # delete task
+    def delete(self, task_id: int) -> None:
+        
+        # get the item to delete
+        model = self.db.query(TaskModel).filter(TaskModel.id == task_id).first()
+
+        if model:
+            self.db.delete(model)
+            self.db.commit();
