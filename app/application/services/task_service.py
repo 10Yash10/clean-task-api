@@ -10,50 +10,50 @@ class TaskService:
 
 
 
-def create_task(self, title: str, description: str, priority: str, assigned_user_id: int) -> Task:
-    if priority not in ['low', 'medium', 'high']:
-        raise ValueError('Invalid priority')
+    def create_task(self, title: str, description: str, priority: str, assigned_user_id: int) -> Task:
+        if priority not in ['low', 'medium', 'high']:
+            raise ValueError('Invalid priority')
 
-    task = Task(
-        id=None,
-        title=title,
-        description=description,
-        status="todo",   # By default the status will be todo
-        priority=priority,
-        assigned_user_id=assigned_user_id
-    )
+        task = Task(
+            id=None,
+            title=title,
+            description=description,
+            status="todo",   # By default the status will be todo
+            priority=priority,
+            assigned_user_id=assigned_user_id
+        )
 
-    return self.task_repository.create(task)
-
-
-def get_task(self, task_id: int) -> Optional[Task]:
-    task = self.task_repository.get_by_id(task_id)
-
-    return task
+        return self.task_repository.create(task)
 
 
-def list_task(self) -> List[Task]:
-    return self.task_repository.get_all()
+    def get_task(self, task_id: int) -> Optional[Task]:
+        task = self.task_repository.get_by_id(task_id)
+
+        return task
 
 
-def update_task_status(self, task_id: int, new_status: str) -> Task:
-    task = self.task_repository.get_by_id(task_id)
-
-    if not task:
-        raise ValueError("Task not Found")
-
-    if task.status == "done" and new_status == "todo":
-        raise ValueError("Task cannot move from DONE to TODO")
-
-    task.status = new_status
-
-    return self.task_repository.update(task)
+    def list_task(self) -> List[Task]:
+        return self.task_repository.get_all()
 
 
-def delete_task(self, task_id: int) -> None:
-    task = self.task_repository.get_by_id(task_id)
+    def update_task_status(self, task_id: int, new_status: str) -> Task:
+        task = self.task_repository.get_by_id(task_id)
 
-    if not task:
-        raise ValueError("Task not Found")
+        if not task:
+            raise ValueError("Task not Found")
 
-    return self.task_repository.delete(task_id)
+        if task.status == "done" and new_status == "todo":
+            raise ValueError("Task cannot move from DONE to TODO")
+
+        task.status = new_status
+
+        return self.task_repository.update(task)
+
+
+    def delete_task(self, task_id: int) -> None:
+        task = self.task_repository.get_by_id(task_id)
+
+        if not task:
+            raise ValueError("Task not Found")
+
+        return self.task_repository.delete(task_id)
